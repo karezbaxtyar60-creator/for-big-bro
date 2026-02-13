@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Very Important Question</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #fff0f5;
+            text-align: center;
+            overflow: hidden;
+        }
+        .bunny { font-size: 80px; margin-bottom: 10px; }
+        h1 { color: #d63384; }
+        .buttons { display: flex; gap: 20px; align-items: center; justify-content: center; }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn { background-color: #ff69b4; color: white; z-index: 100; }
+        #noBtn { background-color: #ccc; color: #333; }
+
+        .hidden { display: none; }
+        .success-msg { font-size: 30px; color: #d63384; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <div class="bunny">🐰</div>
+        <h1 id="question">Do you love your middle sister?</h1>
+        
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">Yes</button>
+            <button id="noBtn" onclick="shrinkNo()">No</button>
+        </div>
+    </div>
+
+    <div id="success" class="hidden">
+        <div class="bunny">💖✨</div>
+        <p class="success-msg">Huh, of course you do! <br> I'm your favorite cute sister. 😌</p>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        let yesSize = 18;
+        const noMessages = [
+            "Are you sure?",
+            "Seriously??",
+            "What? I'm your sister!",
+            "You need to love me! 😠",
+            "Think again...",
+            "Loading... Error: No not found",
+            "JUST CLICK YES ALREADY"
+        ];
+
+        function shrinkNo() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            
+            // Change the message
+            if (clickCount < noMessages.length) {
+                noBtn.innerText = noMessages[clickCount];
+            } else {
+                noBtn.innerText = "Error 404";
+            }
+
+            // Make Yes Button bigger
+            yesSize += 40; 
+            yesBtn.style.fontSize = yesSize + "px";
+            yesBtn.style.padding = (yesSize/2) + "px " + yesSize + "px";
+
+            // If it gets too big, cover the screen
+            if (yesSize > 300) {
+                yesBtn.style.position = "fixed";
+                yesBtn.style.top = "0";
+                yesBtn.style.left = "0";
+                yesBtn.style.width = "100vw";
+                yesBtn.style.height = "100vh";
+                yesBtn.style.borderRadius = "0";
+                noBtn.style.display = "none";
+            }
+
+            clickCount++;
+        }
+
+        function celebrate() {
+            document.getElementById('game-container').classList.add('hidden');
+            document.getElementById('success').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
